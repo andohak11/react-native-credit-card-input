@@ -8,62 +8,12 @@ import {
   LayoutAnimation,
   TouchableOpacity,
   TextInput,
+  Dimensions,
 } from "react-native";
 
 import Icons from "./Icons";
 import CCInput from "./CCInput";
 import { InjectedProps } from "./connectToState";
-
-const INFINITE_WIDTH = 1000;
-
-const s = StyleSheet.create({
-  container: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    overflow: "hidden",
-  },
-  icon: {
-    width: 48,
-    height: 40,
-    resizeMode: "contain",
-  },
-  expanded: {
-    flex: 1,
-  },
-  hidden: {
-    width: 0,
-  },
-  leftPart: {
-    overflow: "hidden",
-  },
-  rightPart: {
-    overflow: "hidden",
-    flexDirection: "row",
-  },
-  last4: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  numberInput: {
-    width: INFINITE_WIDTH,
-  },
-  expiryInput: {
-    width: 80,
-  },
-  cvcInput: {
-    width: 80,
-  },
-  last4Input: {
-    width: 60,
-    marginLeft: 20,
-  },
-  input: {
-    height: 40,
-    color: "black",
-  },
-});
 
 /* eslint react/prop-types: 0 */ // https://github.com/yannickcr/eslint-plugin-react/issues/106
 export default class LiteCreditCardInput extends Component {
@@ -110,14 +60,13 @@ export default class LiteCreditCardInput extends Component {
 
   _inputProps = field => {
     const {
-      inputStyle, validColor, invalidColor, placeholderColor,
+      validColor, invalidColor, placeholderColor,
       placeholders, values, status,
       onFocus, onChange, onBecomeEmpty, onBecomeValid,
       additionalInputsProps,
     } = this.props;
 
     return {
-      inputStyle: [s.input, inputStyle],
       validColor, invalidColor, placeholderColor,
       ref: field, field,
 
@@ -140,43 +89,94 @@ export default class LiteCreditCardInput extends Component {
 
   render() {
     const { focused, values: { number }, inputStyle, status: { number: numberStatus } } = this.props;
-    const showRightPart = focused && focused !== "number";
 
     return (
       <View style={s.container}>
-        <View style={[
-          s.leftPart,
-          showRightPart ? s.hidden : s.expanded,
-        ]}>
+        <View style={s.numberContainer}>
           <CCInput {...this._inputProps("number")}
             keyboardType="numeric"
-            containerStyle={s.numberInput} />
+            inputStyle={{...s.inputStyle, ...s.numberStyle}}
+            borderColor="#e3e3e3" />
+            <Image style={s.icon} source={Icons[this._iconToShow()]} />
         </View>
-        <TouchableOpacity onPress={showRightPart ? this._focusNumber : this._focusExpiry }>
-          <Image style={s.icon} source={Icons[this._iconToShow()]} />
-        </TouchableOpacity>
-        <View style={[
-          s.rightPart,
-          showRightPart ? s.expanded : s.hidden,
-        ]}>
-          <TouchableOpacity onPress={this._focusNumber}
-            style={s.last4}>
-            <View pointerEvents={"none"}>
-              <CCInput field="last4"
-                keyboardType="numeric"
-                value={ numberStatus === "valid" ? number.substr(number.length - 4, 4) : "" }
-                inputStyle={[s.input, inputStyle]}
-                containerStyle={[s.last4Input]} />
-            </View>
-          </TouchableOpacity>
+        <View style={s.bottom}>
           <CCInput {...this._inputProps("expiry")}
+            inputStyle={{...s.inputStyle, ...s.bottomInput}}
             keyboardType="numeric"
-            containerStyle={s.expiryInput} />
+            borderColor="#EDF1F4" />
           <CCInput {...this._inputProps("cvc")}
+            inputStyle={{...s.inputStyle, ...s.bottomInput}}
             keyboardType="numeric"
-            containerStyle={s.cvcInput} />
+            borderColor="#EDF1F4"/>
         </View>
       </View>
     );
   }
 }
+
+const s = StyleSheet.create({
+  container: {
+    marginTop: -25,
+  },
+  inputStyle: {
+    borderRadius: 10,
+    backgroundColor: '#EDF1F4',
+    padding: 22,
+    color: '#6e767b',
+    zIndex: 2,
+    height: 61
+  },
+  numberStyle: {
+    borderWidth: 1,
+    paddingRight: 70,
+  },
+  icon: {
+    width: 48,
+    height: 40,
+    resizeMode: "contain",
+    position: 'absolute',
+    right: 18,
+    top: 10.5,
+  },
+  bottom: {
+    flexDirection: 'row',
+    paddingTop: 22,
+    marginHorizontal: -11,
+  },
+  bottomInput: {
+    width: (Dimensions.get('window').width - 82) / 2,
+    height: 61,
+    marginHorizontal: 11,
+  },
+  expanded: {
+    flex: 1,
+  },
+  hidden: {
+    width: 0,
+  },
+  leftPart: {
+    overflow: "hidden",
+  },
+  rightPart: {
+    overflow: "hidden",
+    flexDirection: "row",
+  },
+  last4: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  expiryInput: {
+    width: 80,
+  },
+  cvcInput: {
+    width: 80,
+  },
+  last4Input: {
+    width: 60,
+    marginLeft: 20,
+  },
+  input: {
+    height: 40,
+    color: "black",
+  },
+});
