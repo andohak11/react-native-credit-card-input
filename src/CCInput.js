@@ -11,7 +11,11 @@ import {
 
 const s = StyleSheet.create({
   baseInputStyle: {
-    color: "black",
+    borderRadius: 30,
+    padding: 22,
+    color: '#4C5961',
+    zIndex: 2,
+    borderWidth: 1,
   },
 });
 
@@ -68,9 +72,16 @@ export default class CCInput extends Component {
 
   render() {
     const { label, value, placeholder, status, keyboardType,
-            containerStyle, inputStyle, labelStyle,
-            validColor, invalidColor, placeholderColor,
-            additionalInputProps, borderColor } = this.props;
+            containerStyle, inputStyle, labelStyle, placeholderColor,
+            additionalInputProps, focused } = this.props;
+    let borderColor = '#f5f5f5';
+    if(status !== 'valid' && !focused && value) {
+      borderColor = '#B38777';
+    }
+    if(focused) {
+      borderColor = '#E3E3E3';
+    }
+
     return (
       <TouchableOpacity onPress={this.focus}
         activeOpacity={0.99}>
@@ -84,12 +95,13 @@ export default class CCInput extends Component {
             style={[
               s.baseInputStyle,
               inputStyle,
-              ((validColor && status === "valid") ? { color: validColor } :
-              (invalidColor && status === "invalid") ? { color: invalidColor } :
-              {borderColor: status === 'valid' ? borderColor : value ? '#C76850' : borderColor}),
+              {
+                backgroundColor: focused ? '#F0F0F0' : '#F5F5F5',
+                borderColor: borderColor,
+              },
             ]}
-            underlineColorAndroid={"transparent"}
-            placeholderTextColor={placeholderColor}
+            underlineColorAndroid="transparent"
+            placeholderTextColor="#788D99"
             placeholder={placeholder}
             value={value}
             onFocus={this._onFocus}

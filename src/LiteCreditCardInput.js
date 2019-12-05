@@ -88,7 +88,7 @@ export default class LiteCreditCardInput extends Component {
   }
 
   render() {
-    const { focused, values: { number }, inputStyle, status: { number: numberStatus } } = this.props;
+    const { focused } = this.props;
 
     return (
       <View style={s.container}>
@@ -96,18 +96,18 @@ export default class LiteCreditCardInput extends Component {
           <CCInput {...this._inputProps("number")}
             keyboardType="numeric"
             inputStyle={{...s.inputStyle, ...s.numberStyle}}
-            borderColor="#e3e3e3" />
+            focused={focused === 'number'} />
             <Image style={s.icon} source={Icons[this._iconToShow()]} />
         </View>
         <View style={s.bottom}>
           <CCInput {...this._inputProps("expiry")}
             inputStyle={{...s.inputStyle, ...s.bottomInput}}
             keyboardType="numeric"
-            borderColor="#EDF1F4" />
+            focused={focused === 'expiry'} />
           <CCInput {...this._inputProps("cvc")}
             inputStyle={{...s.inputStyle, ...s.bottomInput}}
             keyboardType="numeric"
-            borderColor="#EDF1F4"/>
+            focused={focused === 'cvc'}/>
         </View>
       </View>
     );
@@ -119,10 +119,6 @@ const s = StyleSheet.create({
     marginTop: -25,
   },
   inputStyle: {
-    borderRadius: 10,
-    backgroundColor: '#EDF1F4',
-    padding: 22,
-    color: '#6e767b',
     zIndex: 2,
     height: 61
   },
@@ -136,7 +132,7 @@ const s = StyleSheet.create({
     resizeMode: "contain",
     position: 'absolute',
     right: 18,
-    top: 10.5,
+    top: 10,
   },
   bottom: {
     flexDirection: 'row',
