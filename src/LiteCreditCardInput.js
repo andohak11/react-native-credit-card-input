@@ -93,21 +93,31 @@ export default class LiteCreditCardInput extends Component {
     return (
       <View style={s.container}>
         <View style={s.numberContainer}>
-          <CCInput {...this._inputProps("number")}
+          <CCInput
+            {...this._inputProps("number")}
             keyboardType="numeric"
-            inputStyle={{...s.inputStyle, ...s.numberStyle}}
-            focused={focused === 'number'} />
-            <Image style={s.icon} source={Icons[this._iconToShow()]} />
+            focused={focused === 'number'}
+            label="Card Number*"
+          />
+          <Image style={s.icon} source={Icons[this._iconToShow()]} />
         </View>
         <View style={s.bottom}>
-          <CCInput {...this._inputProps("expiry")}
-            inputStyle={{...s.inputStyle, ...s.bottomInput}}
-            keyboardType="numeric"
-            focused={focused === 'expiry'} />
-          <CCInput {...this._inputProps("cvc")}
-            inputStyle={{...s.inputStyle, ...s.bottomInput}}
-            keyboardType="numeric"
-            focused={focused === 'cvc'}/>
+          <View style={s.expiry}>
+            <CCInput
+              {...this._inputProps("expiry")}
+              keyboardType="numeric"
+              focused={focused === 'expiry'}
+              label="Expiry Date*"
+            />
+          </View>
+          <View style={s.cvc}>
+            <CCInput
+              {...this._inputProps("cvc")}
+              keyboardType="numeric"
+              focused={focused === 'cvc'}
+              label="CVV*"
+            />
+          </View>
         </View>
       </View>
     );
@@ -115,34 +125,27 @@ export default class LiteCreditCardInput extends Component {
 }
 
 const s = StyleSheet.create({
-  container: {
-    marginTop: -25,
-  },
   inputStyle: {
     zIndex: 2,
     height: 61
-  },
-  numberStyle: {
-    borderWidth: 1,
-    paddingRight: 70,
   },
   icon: {
     width: 48,
     height: 40,
     resizeMode: "contain",
     position: 'absolute',
-    right: 18,
+    right: 0,
     top: 10,
   },
   bottom: {
     flexDirection: 'row',
-    paddingTop: 22,
-    marginHorizontal: -11,
   },
-  bottomInput: {
-    width: (Dimensions.get('window').width - 82) / 2,
-    height: 61,
-    marginHorizontal: 11,
+  expiry: {
+    flex: 2,
+    paddingRight: 10,
+  },
+  cvc: {
+    flex: 1,
   },
   expanded: {
     flex: 1,

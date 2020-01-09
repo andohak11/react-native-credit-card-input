@@ -10,12 +10,25 @@ import {
 } from "react-native";
 
 const s = StyleSheet.create({
+  container: {
+    paddingBottom: 26,
+  },
+  label: {
+    fontSize: 13,
+    fontWeight: "600",
+    fontStyle: "normal",
+    letterSpacing: 0.22,
+    color: '#949aab',
+    paddingBottom: 6,
+  },
   baseInputStyle: {
-    borderRadius: 30,
-    padding: 22,
-    color: '#4C5961',
-    zIndex: 2,
-    borderWidth: 1,
+    fontSize: 16,
+    fontStyle: "normal",
+    letterSpacing: 0.03,
+    color: "#000000",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e3e8",
+    paddingVertical: 9,
   },
 });
 
@@ -72,21 +85,21 @@ export default class CCInput extends Component {
 
   render() {
     const { label, value, placeholder, status, keyboardType,
-            containerStyle, inputStyle, labelStyle, placeholderColor,
+            containerStyle, inputStyle, labelStyle,
             additionalInputProps, focused } = this.props;
-    let borderColor = '#f5f5f5';
+    let borderBottomColor = '#e0e3e8';
     if(status !== 'valid' && !focused && value) {
-      borderColor = '#B38777';
+      borderBottomColor = '#F90604';
     }
     if(focused) {
-      borderColor = '#E3E3E3';
+      borderBottomColor = '#e0e3e8';
     }
 
     return (
       <TouchableOpacity onPress={this.focus}
         activeOpacity={0.99}>
-        <View style={[containerStyle]}>
-          { !!label && <Text style={[labelStyle]}>{label}</Text>}
+        <View style={s.container}>
+          <Text style={s.label}>{label}</Text>
           <TextInput ref="input"
             {...additionalInputProps}
             keyboardType={keyboardType}
@@ -96,8 +109,7 @@ export default class CCInput extends Component {
               s.baseInputStyle,
               inputStyle,
               {
-                backgroundColor: focused ? '#F0F0F0' : '#F5F5F5',
-                borderColor: borderColor,
+                borderBottomColor,
               },
             ]}
             underlineColorAndroid="transparent"
