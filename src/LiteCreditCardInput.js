@@ -135,7 +135,7 @@ const s = StyleSheet.create({
     resizeMode: "contain",
     position: 'absolute',
     right: 0,
-    top: 10,
+    bottom: 28,
   },
   bottom: {
     flexDirection: 'row',

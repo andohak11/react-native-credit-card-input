@@ -29,6 +29,7 @@ const s = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#e0e3e8",
     paddingVertical: 9,
+    backgroundColor: '#FFFFFF'
   },
 });
 
