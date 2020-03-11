@@ -64,6 +64,8 @@ export default class LiteCreditCardInput extends Component {
       placeholders, values, status,
       onFocus, onChange, onBecomeEmpty, onBecomeValid,
       additionalInputsProps,
+      inputValues,
+      numberStatus
     } = this.props;
 
     return {
@@ -71,8 +73,8 @@ export default class LiteCreditCardInput extends Component {
       ref: field, field,
 
       placeholder: placeholders[field],
-      value: values[field],
-      status: status[field],
+      value: inputValues[field],
+      status: field === 'number' ? numberStatus || status[field] : status[field],
 
       onFocus, onChange, onBecomeEmpty, onBecomeValid,
       additionalInputProps: additionalInputsProps[field],
@@ -88,26 +90,24 @@ export default class LiteCreditCardInput extends Component {
   }
 
   render() {
-    const { focused } = this.props;
-
     return (
       <View style={s.container}>
         <View style={s.numberContainer}>
           <CCInput {...this._inputProps("number")}
             keyboardType="numeric"
-            inputStyle={{...s.inputStyle, ...s.numberStyle}}
-            focused={focused === 'number'} />
-            <Image style={s.icon} source={Icons[this._iconToShow()]} />
+            inputStyle={{ ...s.inputStyle, ...s.numberStyle }}
+            borderColor="#e3e3e3" />
+          <Image style={s.icon} source={Icons[this._iconToShow()]} />
         </View>
         <View style={s.bottom}>
           <CCInput {...this._inputProps("expiry")}
-            inputStyle={{...s.inputStyle, ...s.bottomInput}}
+            inputStyle={{ ...s.inputStyle, ...s.bottomInput }}
             keyboardType="numeric"
-            focused={focused === 'expiry'} />
+            borderColor="#EDF1F4" />
           <CCInput {...this._inputProps("cvc")}
-            inputStyle={{...s.inputStyle, ...s.bottomInput}}
+            inputStyle={{ ...s.inputStyle, ...s.bottomInput }}
             keyboardType="numeric"
-            focused={focused === 'cvc'}/>
+            borderColor="#EDF1F4" />
         </View>
       </View>
     );
@@ -118,13 +118,21 @@ const s = StyleSheet.create({
   container: {
     marginTop: -25,
   },
+  numberContainer: {
+    width: Dimensions.get('window').width - 120,
+  },
   inputStyle: {
+    borderRadius: 30,
+    backgroundColor: '#EDF1F4',
+    padding: 22,
+    color: '#6e767b',
     zIndex: 2,
-    height: 61
+    height: 61,
   },
   numberStyle: {
     borderWidth: 1,
     paddingRight: 70,
+    width: '100%'
   },
   icon: {
     width: 48,
@@ -132,7 +140,7 @@ const s = StyleSheet.create({
     resizeMode: "contain",
     position: 'absolute',
     right: 18,
-    top: 10,
+    top: 10.5,
   },
   bottom: {
     flexDirection: 'row',
