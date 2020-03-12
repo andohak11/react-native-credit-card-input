@@ -73,7 +73,7 @@ export default class LiteCreditCardInput extends Component {
       ref: field, field,
 
       placeholder: placeholders[field],
-      value: inputValues[field],
+      value: inputValues[field] || values[field],
       status: field === 'number' ? numberStatus || status[field] : status[field],
 
       onFocus, onChange, onBecomeEmpty, onBecomeValid,
