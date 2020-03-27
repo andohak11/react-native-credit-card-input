@@ -134,12 +134,12 @@ const s = StyleSheet.create({
     width: '100%'
   },
   icon: {
-    width: 48,
-    height: 40,
+    width: 40,
+    height: 33,
     resizeMode: "contain",
     position: 'absolute',
     right: 18,
-    top: 10.5,
+    top: 14,
   },
   bottom: {
     flexDirection: 'row',
