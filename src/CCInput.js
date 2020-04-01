@@ -73,7 +73,7 @@ export default class CCInput extends Component {
   render() {
     const { label, value, placeholder, status, keyboardType,
             containerStyle, inputStyle, labelStyle, placeholderColor,
-            additionalInputProps, focused } = this.props;
+            additionalInputProps, focused, ...rest } = this.props;
     let borderColor = '#f5f5f5';
     if(status !== 'valid' && !focused && value) {
       borderColor = '#B38777';
@@ -89,6 +89,7 @@ export default class CCInput extends Component {
           { !!label && <Text style={[labelStyle]}>{label}</Text>}
           <TextInput ref="input"
             {...additionalInputProps}
+            {...rest}
             keyboardType={keyboardType}
             autoCapitalise="words"
             autoCorrect={false}

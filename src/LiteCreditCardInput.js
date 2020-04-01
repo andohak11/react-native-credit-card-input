@@ -64,8 +64,11 @@ export default class LiteCreditCardInput extends Component {
       placeholders, values, status,
       onFocus, onChange, onBecomeEmpty, onBecomeValid,
       additionalInputsProps,
-      numberStatus
+      numberStatus,
+      lengths
     } = this.props;
+
+    console.log('maxCVCLength', lengths)
 
     return {
       validColor, invalidColor, placeholderColor,
@@ -77,6 +80,7 @@ export default class LiteCreditCardInput extends Component {
 
       onFocus, onChange, onBecomeEmpty, onBecomeValid,
       additionalInputProps: additionalInputsProps[field],
+      maxLength: lengths ? lengths[field] : 30,
     };
   };
 
@@ -102,13 +106,11 @@ export default class LiteCreditCardInput extends Component {
           <CCInput {...this._inputProps("expiry")}
             inputStyle={{ ...s.inputStyle, ...s.bottomInput }}
             keyboardType="numeric"
-            borderColor="#EDF1F4"
-            maxLength={4} />
+            borderColor="#EDF1F4" />
           <CCInput {...this._inputProps("cvc")}
             inputStyle={{ ...s.inputStyle, ...s.bottomInput }}
             keyboardType="numeric"
-            borderColor="#EDF1F4"
-            maxLength={3} />
+            borderColor="#EDF1F4" />
         </View>
       </View>
     );

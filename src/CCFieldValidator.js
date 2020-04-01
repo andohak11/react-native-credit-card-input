@@ -20,6 +20,9 @@ export default class CCFieldValidator {
     const numberValidation = valid.number(formValues.number);
     const expiryValidation = valid.expirationDate(formValues.expiry);
     const maxCVCLength = (numberValidation.card || FALLBACK_CARD).code.size;
+    const numberValuesLengths = (numberValidation.card || FALLBACK_CARD).lengths;
+    const maxNumberLength = numberValuesLengths[numberValuesLengths.length - 1];
+
     const cvcValidation = valid.cvv(formValues.cvc, maxCVCLength);
 
     const validationStatuses = pick({
@@ -33,6 +36,7 @@ export default class CCFieldValidator {
     return {
       valid: every(values(validationStatuses), status => status === "valid"),
       status: validationStatuses,
+      lengths: {number: maxNumberLength, expiry: 5, cvc: maxCVCLength}
     };
   };
 }
