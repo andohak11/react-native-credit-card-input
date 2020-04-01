@@ -102,11 +102,13 @@ export default class LiteCreditCardInput extends Component {
           <CCInput {...this._inputProps("expiry")}
             inputStyle={{ ...s.inputStyle, ...s.bottomInput }}
             keyboardType="numeric"
-            borderColor="#EDF1F4" />
+            borderColor="#EDF1F4"
+            maxLength={4} />
           <CCInput {...this._inputProps("cvc")}
             inputStyle={{ ...s.inputStyle, ...s.bottomInput }}
             keyboardType="numeric"
-            borderColor="#EDF1F4" />
+            borderColor="#EDF1F4"
+            maxLength={3} />
         </View>
       </View>
     );
