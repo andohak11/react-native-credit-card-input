@@ -68,8 +68,6 @@ export default class LiteCreditCardInput extends Component {
       lengths
     } = this.props;
 
-    console.log('maxCVCLength', lengths)
-
     return {
       validColor, invalidColor, placeholderColor,
       ref: field, field,

@@ -20,8 +20,8 @@ export default class CCFieldValidator {
     const numberValidation = valid.number(formValues.number);
     const expiryValidation = valid.expirationDate(formValues.expiry);
     const maxCVCLength = (numberValidation.card || FALLBACK_CARD).code.size;
-    const numberValuesLengths = (numberValidation.card || FALLBACK_CARD).lengths;
-    const maxNumberLength = numberValuesLengths[numberValuesLengths.length - 1];
+    const numberValues = (numberValidation.card || FALLBACK_CARD);
+    const maxNumberLength = numberValues.lengths[0] + numberValues.gaps.length;
 
     const cvcValidation = valid.cvv(formValues.cvc, maxCVCLength);
 
